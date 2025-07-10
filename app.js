@@ -22,7 +22,7 @@ dotenv.config();
 
 // setupe express
 const app = express()
-const port = 3002;
+const port = 3003;
 
 // setup middleware
 app.use(express.json({ limit: '50mb' }));
