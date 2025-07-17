@@ -1,7 +1,7 @@
 import Decimal from 'decimal.js';
 
 export default class Type5Row {
-    constructor(merchantId, merchantName, transaction, salesAmount, income, expenses, net, bps, bankSplit, needsAudit, splits = []) {
+    constructor(merchantId, merchantName, transaction, salesAmount, income, expenses, net, bps, bankSplit, branchID, needsAudit, splits = []) {
         this.needsAudit = needsAudit;
         this['Merchant Id'] = merchantId;
         this['Merchant Name'] = merchantName;
@@ -13,6 +13,7 @@ export default class Type5Row {
         this['BPS'] = bps;
         this['%'] = typeof bankSplit === 'string' ? bankSplit : this.convertToPercentage(bankSplit); // Convert to percentage string
         this['Agent Net'] = this.calculateBankPayout(net, bankSplit); // Full precision calculation
+        this['Branch ID'] = branchID; // Add Branch ID support
         this.splits = splits; // Add splits property
         this.approved = false;
     }

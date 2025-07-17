@@ -619,6 +619,7 @@ export default class ReportsV2Coor {
         organizationID,
         monthYear
       );
+    
       if (!processorReports || processorReports.length === 0) {
         throw new Error("No processor reports found for this month/year.");
       }
@@ -629,6 +630,7 @@ export default class ReportsV2Coor {
         agent,
         processorReports
       );
+
       return agentReport;
     } catch (error) {
       throw new Error("Error creating agent report: " + error.message);

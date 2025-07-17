@@ -41,6 +41,9 @@ const buildAgentReportData = (agent, processorReports) => {
       );
     }
 
+    console.log('processorReports', JSON.stringify(processorReports, null, 2));
+
+
     // Build the agent report data by filtering each processor's report data
     const agentReportData = processorReports.map((report) => ({
       processor: report.processor,
@@ -58,6 +61,8 @@ const buildProcessorReportData = (report, agent) => {
   try {
     //console.log('Processing report for processor:', report.processor);
     //console.log('First row of report data structure:', report.reportData[0]); // Log the first row to inspect its structure
+
+
 
     const agentClients = agent.clients;
 
@@ -131,7 +136,8 @@ const buildProcessorReportData = (report, agent) => {
           break;
       }
 
-      const branchID = client.partner ? client.branchID : "";
+      // Use Branch ID from processor report, fallback to client.branchID if not available
+      const branchID = row["Branch ID"] || (client.partner ? client.branchID : "");
 
       const convertToPercentage = (value) => {
         const percentage = value * 100;
@@ -202,6 +208,24 @@ const buildProcessorReportData = (report, agent) => {
             approved: row.approved || false
           };
           break;
+
+        case "type5":
+          finalReportRow = {
+            "Merchant Id": row["Merchant Id"],
+            "Merchant Name": row["Merchant Name"],
+            Transaction: row["Transaction"],
+            "Sales Amount": row["Sales Amount"],
+            Income: row["Income"],
+            Expenses: row["Expenses"],
+            Net: row["Net"],
+            BPS: row["BPS"],
+            "Agent Split": convertToPercentage(agentSplit),
+            "Agent Net": row["Net"] * agentSplit,
+            "Branch ID": branchID,
+            splits: row.splits || [],
+            approved: row.approved || false
+          };
+          break;    
       }
 
       return finalReportRow;
