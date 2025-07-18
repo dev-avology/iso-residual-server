@@ -14,7 +14,7 @@ export const login = async (req, res) => {
             username: user.username,
             organization: user.organizationID,
             isAdmin: user.isAdmin,  // Assuming `isAdmin` is a boolean property of `user`
-            email: 'admin@gmail.com'
+            email: 'cody@gmail.com'
         };
 
         // Sign the token with the payload
